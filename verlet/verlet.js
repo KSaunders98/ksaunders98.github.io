@@ -23,25 +23,9 @@ function update(data,dt,ldt) {
 		var dy = (y-data["lasty"]);
 		data["lastx"] = x;
 		data["lasty"] = y;
-		var dt2 = dt*dt;//dt/ldt;
-		data["x"] = x+(dx*0.99);
-		data["y"] = y+(dy*0.99)+1//*dt2;//0.002*dt*dt;//(dt+ldt)/2;
-		if (data["x"] > canvas.width-1) {
-			data["lastx"] = data["x"];
-			data["x"] = canvas.width-1;
-		}
-		if (data["x"] < 1) {
-			data["lastx"] = data["x"];
-			data["x"] = 1;
-		}
-		if (data["y"] > canvas.height-1) {
-			data["lasty"] = data["y"];
-			data["y"] = canvas.height-1;
-		}
-		if (data["y"] < 1) {
-			data["lasty"] = data["y"];
-			data["y"] = 1;
-		}
+		var dt2 = dt/ldt;//dt/ldt;
+		data["x"] = x + dx*0.95*dt2;
+		data["y"] = y + dy*0.95*dt2 + 1*dt*(ldt+dt)/2; //*dt2;//0.002*dt*dt;//(dt+ldt)/2;
 		/*var x = data["x"];
 		var y = data["y"];
 		for (var i=0;i<points.length;i++) {
@@ -105,12 +89,46 @@ function constrain(data) {
 		p1["y"] = y1 - dy * scalarP1;
 		/*p1["x"] = x1-x3;
 		p1["y"] = y1-y3;*/
+		// Collisions with edges of screen
+		if (p1["x"] > canvas.width-1) {
+			p1["lastx"] = p1["x"];
+			p1["x"] = canvas.width-1;
+		}
+		if (p1["x"] < 1) {
+			p1["lastx"] = p1["x"];
+			p1["x"] = 1;
+		}
+		if (p1["y"] > canvas.height-1) {
+			p1["lasty"] = p1["y"];
+			p1["y"] = canvas.height-1;
+		}
+		if (p1["y"] < 1) {
+			p1["lasty"] = p1["y"];
+			p1["y"] = 1;
+		}
 	}
 	if (!p2.anchored) {
 		p2["x"] = x2 + dx * scalarP2;
 		p2["y"] = y2 + dy * scalarP2;
 		/*p2["x"]= x2+x3;
 		p2["y"] = y2+y3;*/
+		// Collisions with edges of screen
+		if (p2["x"] > canvas.width-1) {
+			p2["lastx"] = p2["x"];
+			p2["x"] = canvas.width-1;
+		}
+		if (p2["x"] < 1) {
+			p2["lastx"] = p2["x"];
+			p2["x"] = 1;
+		}
+		if (p2["y"] > canvas.height-1) {
+			p2["lasty"] = p2["y"];
+			p2["y"] = canvas.height-1;
+		}
+		if (p2["y"] < 1) {
+			p2["lasty"] = p2["y"];
+			p2["y"] = 1;
+		}
 	}
 }
 
