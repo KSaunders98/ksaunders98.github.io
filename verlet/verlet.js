@@ -24,8 +24,8 @@ function update(data,dt,ldt) {
 		data["lastx"] = x;
 		data["lasty"] = y;
 		var dt2 = dt/ldt;//dt/ldt;
-		data["x"] = x + dx*0.95*dt2;
-		data["y"] = y + dy*0.95*dt2 + 1*dt*(ldt+dt)/2; //*dt2;//0.002*dt*dt;//(dt+ldt)/2;
+		data["x"] = x + dx*0.99*dt2;
+		data["y"] = y + dy*0.99*dt2 + 1000*dt*(ldt+dt)/2; //*dt2;//0.002*dt*dt;//(dt+ldt)/2;
 		/*var x = data["x"];
 		var y = data["y"];
 		for (var i=0;i<points.length;i++) {
@@ -282,9 +282,13 @@ canvas.addEventListener('mouseup', function() {
 	mousedown = false;
 },false);
 
-function loop() {
-	var dt = time-Date.now();
-	time = Date.now();
+var lasttime = window.performance.now();
+
+function loop(now) {
+	var now = now || window.performance.now();
+	var elapsedtime = now-lasttime;
+	var dt = elapsedtime/1000;
+	lasttime = now;
 	for (var i=0;i<points.length;i++) {
 		update(points[i],dt,lastdt);
 	}
@@ -329,8 +333,8 @@ function loop() {
 	} else {
 		dragging = [];
 	}
-	setTimeout(loop,0);
+	window.requestAnimationFrame(loop);
 }
 
-setTimeout(loop,0);
+loop();
 
