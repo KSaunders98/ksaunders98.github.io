@@ -287,6 +287,9 @@ var lasttime = window.performance.now();
 function loop(now) {
 	var now = now || window.performance.now();
 	var elapsedtime = now-lasttime;
+	if (elapsedtime <= 0) {
+		elapsedtime = 1;
+	}
 	var dt = elapsedtime/1000;
 	lasttime = now;
 	for (var i=0;i<points.length;i++) {
