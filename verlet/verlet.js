@@ -262,7 +262,6 @@ function render() {
 	context.closePath();
 }
 
-var time = Date.now();
 var lastdt = 0.015;
 var mx = 50+columns*distance;
 var my = 10;
@@ -339,5 +338,5 @@ function loop(now) {
 	window.requestAnimationFrame(loop);
 }
 
-loop();
+window.requestAnimationFrame(loop);
 
